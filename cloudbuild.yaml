@@ -1,0 +1,12 @@
+steps:
+
+- id: 'Create Container'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag=gcr.io/$_IMAGE_REPO/leadtime', '.']
+  waitFor: ['Rebuild Node Files']
+
+
+- id: 'Push to GCR Container Registry'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "gcr.io/$_IMAGE_REPO/leadtime"]
+  waitFor: ['Create Container']
